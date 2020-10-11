@@ -1,0 +1,19 @@
+- name: Create Multiple Users And Groups On DB Servers
+  hosts: dbserver
+  become: true
+  vars_files:
+   - vars/listvars.yml
+  tasks:
+   - name: Create groups from input list variable
+     group:
+       name: "{{ item }}"
+       state: present
+     loop: "{{ groups_list }}"
+   
+   - name: Create users from dictionary with group attribute
+     user:
+       name: "{{ item.value.name }}"
+       group: "{{ item.value.group }}"
+       shell: "{{ item.value.shell }}"
+       state: present
+     with_dict: "{{ users_list }}"

@@ -1,0 +1,16 @@
+- name: Simple Playbook For Webapp Servers
+  hosts: webserver
+  vars:
+    user1: oscheck
+    uid1: 2600
+    state1: present
+  vars_files:
+    - vars/service_checking.yml
+  become: true
+  tasks:
+   - name: Add user with parameter uid and logonname
+     user:
+       name: oracle
+       uid: 2600
+       state: present
+

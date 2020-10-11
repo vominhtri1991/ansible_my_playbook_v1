@@ -1,0 +1,3 @@
+- src: https://github.com/vominhtri1991/ansible_deploy_apache.git 
+  scm: git
+  name: apache_role

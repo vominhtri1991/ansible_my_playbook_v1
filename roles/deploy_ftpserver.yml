@@ -1,0 +1,52 @@
+- name: Install and COnfiuring FTP Server With Some Share
+  become: true
+  hosts: ftpserver
+  vars:
+   ftp_user: ftp_user
+   ftp_share: /ftp_share
+  tasks:
+   - name: Installing vsftpd if server is Redhat
+     yum:
+      name: vsftpd
+      state: present
+     when:
+       - ansible_distribution == "RedHat"
+
+   - name: Load secret password variable for new ftp user
+     include_vars:
+      file: user_password.txt
+
+   - name: Create ftp user with secret password and ftp share
+     user:
+      name: "{{ ftp_user }}"
+      state: present
+      password: user_password
+      home: "{{ ftp_share }}"
+
+   - name: Create FTP Share
+     file:
+      path: "{{ ftp_share }}"
+      state: directory
+      owner: "{{ ftp_user }}"
+      mode: 0770
+
+   - name: Backup default confiuration vsftpd file
+     shell: cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bk2020
+
+   - name: Copy new file configuration vsftp to servers
+     copy:
+      src: vsftpd.conf.template
+      dest: /etc/vsftpd/vsftpd.conf
+      owner: root
+      group: root
+      mode: 600
+     notify:
+      - restart vsftpd
+  
+  handlers:
+   - name: restart vsftpd
+     service:
+      name: vsftpd
+      state: restarted
+
+   

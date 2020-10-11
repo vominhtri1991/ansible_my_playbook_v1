@@ -1,0 +1,36 @@
+- name: Deploying And Configuring Apache HTTPD
+  hosts: webserver
+  become: true
+  vars_files:
+   - /root/ansible/playbooks/git_roles/custom.vars 
+  tasks:
+   - name: Installing Aapche using yum module
+     yum:
+       name: httpd
+       state: present
+
+   - name: Copy configuration Jinja2 template file
+     template:
+       src: /root/ansible/playbooks/git_roles/custom.jinja 
+       dest: /etc/httpd/conf.d/custom.conf
+       owner: root
+       group: root
+       mode: 0644
+
+   - name: Copy module configuation file for enableing mpm-worker
+     copy:
+       src: /root/ansible/playbooks/git_roles/00-mpm.conf.template
+       dest: /etc/httpd/conf.modules.d/00-mpm.conf
+       owner: root
+       group: root
+       mode: 0644 
+     notify:
+      - start httpd
+
+  handlers:
+   - name: start httpd
+     service:
+       name: httpd
+       state: started
+       enabled: yes
+

@@ -1,0 +1,2 @@
+service_name: rsyslog 
+service_state: restarted

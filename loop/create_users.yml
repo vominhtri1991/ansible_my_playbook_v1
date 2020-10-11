@@ -1,0 +1,15 @@
+- name: Create multiple user for all DB Servers
+  hosts: dbserver
+  become: true
+  vars:
+    list_users:
+      - john01
+      - kenny01
+      - winner01
+  tasks:
+    - name: Start cfreate users for each hosts
+      user:
+       name: "{{ item }}"
+       state: present
+      loop: "{{ list_users }}"
+

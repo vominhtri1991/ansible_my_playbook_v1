@@ -1,0 +1,14 @@
+- name: Get All IP Addressed Used By AWS Return By AWS API
+  hosts: localhost
+  vars:
+   aws_list_ip: "{{ lookup('url', 'https://ip-ranges.amazonaws.com/ip-ranges.json', split_lines=False) }}"
+  tasks:
+   - name: Print all IPv4 addresses and region used on AWS
+     debug:
+       msg: "{{ 'IP: ' + item['ip_prefix'] + ' On Region: ' + item['region'] }}"
+     loop: "{{ aws_list_ip['prefixes'] }}"
+
+   - name: Printall IPv6 addresses and region used on AWS
+     debug:
+       msg: "{{ 'IP: ' + item['ipv6_prefix'] + ' On Region: ' + item['region'] }}"
+     loop: "{{ aws_list_ip['ipv6_prefixes'] }}"

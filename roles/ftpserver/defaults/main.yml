@@ -1,0 +1,4 @@
+---
+# defaults file for ftpserver
+ftp_user: ftp_user
+ftp_share: /ftp_share

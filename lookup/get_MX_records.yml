@@ -1,0 +1,12 @@
+ - name: Print all MX record of some domains
+   hosts: localhost
+   vars:
+     domains:
+      - google.com.vn
+      - vnexpress.net
+      - yahoo.com
+   tasks:
+    - name: Print MX record using lookup plugin dig
+      debug:
+        msg: "{{ query('dig',item,'qtype=MX') }}"
+      loop: "{{ domains }}"

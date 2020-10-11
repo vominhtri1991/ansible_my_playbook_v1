@@ -1,0 +1,6 @@
+- name: Deploy FTP Serves Using role ftpserver
+  become: true
+  hosts: ftpserver
+  
+  roles:
+   - ftpserver

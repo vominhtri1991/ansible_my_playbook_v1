@@ -1,0 +1,7 @@
+- name: Test role apache
+  hosts: webserver
+  become: true
+
+
+  roles:
+   - apache-with-status

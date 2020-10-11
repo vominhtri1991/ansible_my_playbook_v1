@@ -1,0 +1,31 @@
+- name:  Configure NTP Client On Managed Hosts
+  become: true
+  hosts: all
+  vars:
+    os_support:
+      - RedHat
+      - Fedora
+      - Centos
+    ntp_server_str: 'server 192.168.9.2'
+  tasks:
+   - name: Backup old chronyd config file
+     shell:  cp /etc/chrony.conf /etc/chrony.conf.bk2020
+     ignore_errors: true
+     when:
+      - ansible_distribution in os_support
+
+   - name: Copy config file to managed hosts and notify to handler
+     template:
+       src: templates/chrony.conf_template
+       dest: /etc/chrony.conf 
+     when:
+      - ansible_distribution in os_support
+     notify:
+      - restart chronyd
+  
+  handlers:
+    - name: restart chronyd
+      service:
+        name: chronyd
+        state: restarted
+ 

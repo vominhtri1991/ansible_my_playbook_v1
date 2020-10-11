@@ -1,0 +1,12 @@
+- name: Install Required Software For Web Server
+  hosts: webserver
+  become: true
+  tasks:
+   - name: Install Software Defined In Webserver Group Variabels (group_vars/webserver)
+     yum:
+       name: "{{ software }}"
+       state: present 
+     register: output
+
+   - debug:
+      msg: "Output of task is: {{ output }}"

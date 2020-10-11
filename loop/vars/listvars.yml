@@ -1,0 +1,22 @@
+groups_list:
+  - system
+  - database
+  - application
+
+
+  
+users_list:
+  kiwi01:
+    name: kiwi01
+    group: system
+    shell: /bin/bash
+  levan01:
+    name: levan01
+    group: database 
+    shell: /bin/bash
+  susan01:
+    name: susan01
+    group: application 
+    shell: /bin/sh
+
+  

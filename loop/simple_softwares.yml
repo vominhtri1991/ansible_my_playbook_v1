@@ -1,0 +1,11 @@
+- name: Install required softwares on Web Servers
+  hosts: webserver
+  become: true
+  tasks:
+    - name: Install multiple software on host running Redhat/Centos using yum module
+      yum:
+        name:
+         - chrony 
+         - mysql-server
+         - telnet
+        state: present

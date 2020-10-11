@@ -1,0 +1,9 @@
+- name: Simple playbook create user for webserver
+  hosts: all
+  become: true
+  tasks:
+   - name: Add new user with parameter logon name and uid
+     user:
+       name: oscheck29
+       uid: 3000 
+       state: present

@@ -1,0 +1,17 @@
+- name: Apply multiple filter example to list
+  hosts: localhost
+  vars:
+   my_list_num:
+    - 9
+    - 29
+    - 36
+    - 26
+    - 12
+    - 9
+    - 29
+    - 36
+    - 99
+  tasks:
+   - name: Exmaple sort and get unique value from list
+     debug:
+       msg: "{{ my_list_num | unique | sort }}"

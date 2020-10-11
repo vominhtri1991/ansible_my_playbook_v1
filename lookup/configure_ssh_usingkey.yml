@@ -1,0 +1,15 @@
+- name: COnfigure SSH Using User Public Key On Managed Hosts
+  become: true
+  hosts: all
+  vars:
+    user_list:
+     - oscheck
+     - oracle
+     - winner
+  tasks:
+   - name: Using module authorized_key to add publick key of users
+     authorized_key:
+      user: "{{ item }}"
+      key: "{{ lookup('file','/home/'+item+'/.ssh/id_rsa.pub') }}"
+     loop: "{{ user_list }}"
+ 

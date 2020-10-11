@@ -1,0 +1,9 @@
+- name: Get Valid IP Address From List Of Variables
+  hosts: localhost
+  vars_files:
+   - list_of_ip 
+  tasks:
+   - name: Valid IP Address
+     debug:
+       msg: "{{ mylist | ipaddr('network/prefix') }}"
+

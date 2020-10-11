@@ -1,0 +1,18 @@
+- name: Install Nginx From Internet For All RedHat Hosts
+  become: true
+  hosts: all
+  tasks:
+   - name: Install Nginx If Fail Check Internet Connection
+     block:
+      - name: Install Using Yum
+        yum: 
+         name: nginx
+         state: present
+     when: ansible_distribution == "RedHat"
+     rescue:
+      - name: Testing Internet Connection By Using Ping
+        shell: ping -c 3 google.com
+        register: output
+      - name: Print Output Of Ping To Google 
+        debug:
+          msg: "{{ output }}"

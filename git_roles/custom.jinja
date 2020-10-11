@@ -1,0 +1,11 @@
+ExtendedStatus {{ ExtendedStatus }}
+StartServers {{ StartServers }}
+MaxConnectionsPerChild {{ MaxConnectionsPerChild }}
+MaxKeepAliveRequests {{ MaxKeepAliveRequests }}
+MaxRequestWorkers {{ MaxRequestWorkers }}
+
+<Location /server-status>
+     SetHandler server-status
+     Allow from all
+</Location>
+

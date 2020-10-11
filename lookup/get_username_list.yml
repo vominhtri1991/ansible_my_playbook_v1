@@ -1,0 +1,7 @@
+- name: Get list of users on manage hosts
+  hosts: webserver
+  tasks:
+   - name: Print List Of User On Each Host
+     debug:
+       msg: User is {{ item | regex_replace(':.*') }} 
+     loop: "{{ query('lines', 'cat /etc/passwd') }}"

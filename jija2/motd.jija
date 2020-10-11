@@ -1,0 +1,1 @@
+You accessing to server {{ ansible_fqdn }} !!!

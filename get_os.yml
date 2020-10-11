@@ -1,0 +1,7 @@
+- name: List OS disibution os managed host
+  hosts: all
+  become: true
+  tasks:
+   - name: Prit OS disbution name each host
+     debug:
+       msg: "All IP Address: {{ ansible_all_ipv4_addresses }} | OS Distibution: {{ ansible_distribution }}"

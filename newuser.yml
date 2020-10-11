@@ -1,0 +1,20 @@
+- name: Create Required User For All Managed Hosts
+  hosts: all
+  become: true
+  vars_files:
+   - vars/list_users.yml
+  tasks:
+   - name: Load secret password from ecrypted file
+     include_vars:
+       file: secrets/password
+     
+   - name: Print secret load password (only use for testing)
+     debug:
+       msg: "{{ new_user_password }}"
+  
+   - name: Create new users with given password
+     user:
+       name: "{{ list_users['luccy']['name'] }}"
+       shell: /bin/bash
+       password: "{{ new_user_password }}"
+    

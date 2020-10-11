@@ -1,0 +1,30 @@
+- name: Configure motd and ssh service for all host
+  become: true
+  hosts: all
+  tasks:
+    - name: Deploy motd file for all host
+      template:
+        src: motd.jija
+        dest: /etc/motd
+    
+    - name: Backup sshd configuration file before change port
+      shell: cp /etc/ssh/sshd_config /etc/ssh/sshd_config_bk2020
+    
+    - name: Deploy new sshd configurtaion file for change listen port
+      template:
+        src: sshd_config.jija
+        dest: /etc/ssh/sshd_config
+        mode: 600
+        owner: root
+        group: root
+      notify: 
+       - restart sshd
+
+  handlers:
+    - name: restart sshd
+      service:
+        name: sshd
+        state: restarted
+
+
+      

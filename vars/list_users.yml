@@ -1,0 +1,13 @@
+list_users:
+  john:
+    name: john
+  jack:
+    name: jack
+  marry:
+    name: marry
+  tom:
+    name: tom
+  susan:
+    name: susan
+  luccy:
+    name: luccy

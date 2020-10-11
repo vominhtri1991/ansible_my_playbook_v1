@@ -1,0 +1,21 @@
+- name: Start Apache HTTPDif already isntalled on Web Servers
+  hosts: all 
+  become: true
+  tasks:
+   - name : Get output for check installed httpd on hosts
+     shell: systemctl status httpd
+     ignore_errors: true
+     register: output
+  
+   - name: Print output previous command for debug
+     debug:
+       var: output.stdout
+
+   - name: Restart HTTPD service on installed hosts
+     service:
+       name: httpd
+       state: restarted
+     when: '"Apache" in output.stdout' 
+ 
+ 
+      
